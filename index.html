@@ -1,0 +1,499 @@
+<!--
+  Netflix India Homepage Clone – Pixel-perfect recreation in one HTML file
+  - All fonts/images via same-assets; no external CSS/JS
+  - Main sections: Hero, Info, Carousels, FAQ, AI Chat Feature, Footer
+  - Mock data used
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Netflix India – Clone</title>
+  <link rel="icon" type="image/png" href="https://ext.same-assets.com/1538094606/3644830612.webp">
+  <!-- Netflix Sans Font Families -->
+  <style>
+    @font-face {
+      font-family: 'Netflix Sans';
+      font-weight: 400;
+      src: url('https://ext.same-assets.com/1538094606/1730971747.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Netflix Sans';
+      font-weight: 600;
+      src: url('https://ext.same-assets.com/1538094606/325475959.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Netflix Sans';
+      font-weight: 700;
+      src: url('https://ext.same-assets.com/1538094606/4055615607.woff2') format('woff2');
+    }
+    :root {
+      --color-bg: #151315;
+      --color-panel: #232323;
+      --color-primary: #d2121f;
+      --color-title: #fff;
+      --color-txt: #cbc4be;
+      --color-footer: #181818;
+      --color-hover: #e50914;
+      --font-main: 'Netflix Sans', Arial, Helvetica, sans-serif;
+    }
+    html,body {
+      margin:0; padding:0;
+      background: var(--color-bg);
+      color: var(--color-txt);
+      font-family: var(--font-main);
+      min-height:100vh;
+      width:100vw;
+      box-sizing:border-box;
+    }
+    a { color:inherit; text-decoration:none; }
+    ::selection { background: #d2121f33; }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width:8px; background:transparent; }
+    ::-webkit-scrollbar-thumb { background:#232323; border-radius:6px; }
+    /* Utility */
+    .container { max-width:1200px; margin:0 auto; padding:0 2vw; }
+
+    /* HEADER/HERO */
+    .hero-bg {
+      min-height: 98vh;
+      background:
+        linear-gradient(180deg,#15131588 15%,#151315ee 70%,#151315 100%),
+        url('https://ext.same-assets.com/1538094606/2469953191.jpeg') center center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav {
+      width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 0 0 0; z-index: 2; position: relative;
+    }
+    .nav-logo img {
+      height: 40px; width: auto;
+    }
+    .nav-btns {
+      display: flex; gap:14px; align-items:center;
+    }
+    .btn-lang {
+      background: none; color: #fff;
+      border: 1px solid #fff7; border-radius:4px;
+      font-family: inherit; font-size: 1rem; padding:7px 22px 7px 32px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_India.svg') 9px center/22px 20px no-repeat, #232323cc;
+      appearance: none;
+      outline:none; cursor:pointer;
+      text-align:left;
+    }
+    .btn-signin {
+      background: var(--color-primary);
+      color: #fff; border-radius:4px;
+      border:none; padding:8px 18px;font-weight:600;
+      font-family: inherit; font-size:1rem; cursor:pointer;
+      transition: background .15s;
+    }
+    .btn-signin:hover {
+      background: var(--color-hover);
+    }
+    /* HERO CONTENT */
+    .hero-center {
+      margin-top: 12vh;
+      text-align: center;
+      color: var(--color-title);
+      max-width:860px; margin-left:auto; margin-right:auto;
+      z-index: 2; position:relative;
+    }
+    .hero-title {
+      font-size: clamp(2.3rem,6vw,4.25rem); font-weight: 900; letter-spacing: -1.7px;
+      margin-bottom: .35em;
+    }
+    .hero-t1, .hero-t2 {
+      font-size: clamp(1.05rem,3vw,1.5rem);
+      font-weight: 400;
+      margin-bottom: 1.4em;
+    }
+    .hero-form {
+      margin-top: 1.8em;text-align:center;
+      display: flex; flex-wrap:wrap; justify-content:center; gap:16px;
+      align-items: center;
+    }
+    .hero-form input[type=email] {
+      padding: 20px 12px 4px 16px;
+      font-size: 1.25rem;
+      border: 1px solid #fff3;
+      border-radius: 4px;
+      min-width:300px; max-width:380px;
+      background: #232323dd; color:#fff;
+      font-family: inherit;
+      outline:none;
+    }
+    .hero-form input:focus {
+      border-color: var(--color-primary);
+    }
+    .hero-form button {
+      font-size: 1.5rem; padding:13px 38px;
+      border:none; border-radius:4px;
+      background: var(--color-primary); color:#fff; font-weight:700;
+      letter-spacing:.5px; cursor:pointer;
+      transition:background .14s;
+    }
+    .hero-form button:hover { background: var(--color-hover); }
+    .hero-note {
+      color: #c8c8c8; font-size: 1.09rem; margin-top: .5em;
+    }
+    /* INFO GRID */
+    .info-panel {
+      background: var(--color-panel);
+      margin:0 auto; margin-bottom:32px;
+      margin-top:-70px;
+      box-shadow:0 2px 24px #0007; border-radius:36px;max-width:930px; z-index:2;
+      display:grid; grid-template-columns:1fr 1fr 1fr;
+      gap:6vw; padding:40px 2vw;
+      position:relative;
+    }
+    .info-block {
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+    }
+    .info-block img { width:70px; margin-bottom: 16px;}
+    .info-title { font-size:1.31rem; font-weight:700; color:#fff; margin-bottom:.45em;}
+    .info-txt { font-size:1.06rem; color:#e8e8e8; }
+    /* CAROUSELS */
+    .carousel {
+      margin: 76px 0 36px 0;
+    }
+    .carousel-title {
+      font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom:14px; padding-left: 10px;
+      letter-spacing:-.7px;
+    }
+    .carousel-row {
+      display: flex; gap:20px; overflow-x:auto; padding:0 10px; scroll-behavior:smooth;
+    }
+    .show-tile {
+      flex:0 0 180px; max-width:180px; background:#242424; border-radius:12px;
+      box-shadow:0 2px 10px #00060b70;
+      position:relative; transition: transform .11s;
+      cursor:pointer; margin-bottom:4px;
+      border:2px solid transparent;
+    }
+    .show-tile:hover { transform:scale(1.06); border:2px solid var(--color-primary); z-index:2; }
+    .show-tile img {
+      width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:9px 9px 9px 9px; display:block;
+    }
+    .show-title { font-weight:600;color:#fff;font-size:1rem; margin:8px 0 6px 14px;}
+    /* FAQ */
+    .faq-section {
+      background:#221f1f; border-radius:28px; margin:60px auto 30px auto;
+      max-width:870px; box-shadow:0 1px 12px #0007; color:#fff; padding:36px 2vw;
+    }
+    .faq-header { font-size:2.2rem; font-weight:800; text-align:center; margin-bottom:24px;}
+    .faq-list {margin:0; padding:0; list-style:none;}
+    .faq-q {
+      background:#292929; border-radius:8px;
+      margin-bottom:14px; padding:26px 26px 22px 26px; font-size:1.197rem; font-weight:500; color:#fff;
+      cursor:pointer; transition:background .18s;font-family:inherit; position:relative;
+    }
+    .faq-q.open { background:#353232; }
+    .faq-a {
+      color:#dcdcdc; font-size:1.083rem; padding:18px 22px 10px 12px; margin-left:10px; display:none;
+    }
+    .faq-q.open + .faq-a { display:block;}
+    .faq-arrow {
+      position:absolute; right:28px; top:26px; font-size:1.55em; filter: drop-shadow(0 1px 0 #fff2);
+      transition: transform .19s;
+    }
+    .faq-q.open .faq-arrow { transform:rotate(180deg); }
+    /* AI CHAT */
+    .ai-chat {
+      background:#19171a; border-radius:23px; margin:60px auto 42px auto;
+      color: #f4f4f4; max-width:840px;box-shadow:0 2px 18px #0006; padding:0;
+    }
+    .ai-chat-header {
+      display:flex; align-items:center; padding:28px 36px 6px 33px; gap:20px;
+    }
+    .ai-circle {
+      background:#d2121f; color:#fff;
+      font-weight:800; font-size:1.38rem; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:50%;
+      box-shadow:0 2px 8px #0003;
+    }
+    .ai-chat-tit { font-size:1.52rem; font-weight:700; letter-spacing:-.7px;color:#fff; }
+    .ai-chat-main { min-height:180px; padding:18px 24px 8px 36px; }
+    .ai-convo { display:flex; flex-direction:column; gap:18px; font-size:1.13rem; }
+    .ai-bubble {
+      max-width:80%; padding:14px 18px; border-radius:16px; margin:3px 0; line-height:1.53; word-break:break-word;
+      background: #1d1b1f;
+    }
+    .ai-bubble.ai { background: linear-gradient(80deg,#e5091438 6%,#23232445 100%); border:1.5px solid #d2121f48; color:#fff; align-self:flex-start;}
+    .ai-bubble.user { background:#33383d; color:#fff; align-self:flex-end; border:1.5px solid #353535;}
+    .ai-chat-form { display:flex; gap:15px; align-items:center; padding:0 0 28px 36px; }
+    .ai-chat-form input {
+      background:#231b21; color:#fff; border-radius:10px; font-size:1.13rem; padding:11px 18px; border:none; outline:none; flex:1;
+      border:1.1px solid #151417;
+    }
+    .ai-chat-form button {
+      background:var(--color-primary); color:#fff;font-weight:600; font-size:1.1em;
+      border: none; border-radius:6px; padding:11px 22px; cursor:pointer;
+      transition:background .13s; box-shadow: 0 2px 8px #0003;
+    }
+    .ai-chat-form button:hover { background:var(--color-hover); }
+    .ai-chat-footer { color:#a99; font-size:.97em; text-align:right; padding:0 28px 11px 0; }
+    /* FOOTER */
+    .footer {
+      background:var(--color-footer); color:#888; text-align:center; font-size:.94em; margin-top:40px;
+      border-radius:0 0 18px 18px; padding:28px 0 14px 0; font-family:inherit;
+    }
+    .footer a { color:#b3cdfa; }
+    /* Responsive Design */
+    @media (max-width:900px) {
+      .info-panel { grid-template-columns:1fr 1fr; gap:5vw; }
+    }
+    @media (max-width:650px) {
+      .hero-bg { min-height:auto; }
+      .info-panel { grid-template-columns:1fr; gap:2vw; padding:22px 3vw; border-radius:19px; }
+      .faq-section { border-radius:16px; padding:17px 2vw; margin-top:26px; }
+      .ai-chat { border-radius:17px; }
+      .carousel-row { gap:12px; }
+    }
+    @media (max-width:480px) {
+      .nav { padding-bottom:7vw; }
+      .carousel-row { gap:8px; }
+      .container { padding:0 5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-bg">
+    <nav class="nav container">
+      <a class="nav-logo" href="#home"><img alt="Netflix logo" src="https://ext.same-assets.com/1538094606/1950992896.webp"></a>
+      <div class="nav-btns">
+        <select class="btn-lang"><option>English</option><option>हिंदी</option></select>
+        <button class="btn-signin">Sign In</button>
+      </div>
+    </nav>
+    <div class="hero-center">
+      <h1 class="hero-title">Unlimited movies, TV shows and more</h1>
+      <div class="hero-t1">Watch anywhere. Cancel anytime.</div>
+      <div class="hero-t2">Ready to watch? Enter your email to create or restart your membership.</div>
+      <form class="hero-form" onsubmit="return false">
+        <input type="email" placeholder="Email address" required />
+        <button type="submit">Get Started &nbsp;→</button>
+      </form>
+      <div class="hero-note">Only new members are eligible for this offer.</div>
+    </div>
+  </div>
+
+  <section class="info-panel container">
+    <div class="info-block">
+      <img alt="Device" src="https://ext.same-assets.com/1538094606/2632516337.webp">
+      <div class="info-title">Enjoy on your TV</div>
+      <div class="info-txt">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.</div>
+    </div>
+    <div class="info-block">
+      <img alt="Mobile" src="https://ext.same-assets.com/1538094606/3218008927.webp">
+      <div class="info-title">Download your shows to watch offline</div>
+      <div class="info-txt">Save your favourites easily and always have something to watch.</div>
+    </div>
+    <div class="info-block">
+      <img alt="Kids" src="https://ext.same-assets.com/1538094606/3975075528.webp">
+      <div class="info-title">Create profiles for kids</div>
+      <div class="info-txt">Send children on adventures with their favourite characters in a space made just for them—free with your membership.</div>
+    </div>
+  </section>
+
+  <!-- Popular/Trending - Carousel of cover tiles, using real Netflix cover images, mock data -->
+  <section class="carousel container">
+    <div class="carousel-title">Popular on Netflix</div>
+    <div class="carousel-row" id="carousel-popular">
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/844708784.webp" alt="Bridgerton"><div class="show-title">Bridgerton</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/924556603.webp" alt="Peaky Blinders"><div class="show-title">Peaky Blinders</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/3895876199.webp" alt="Money Heist"><div class="show-title">Money Heist</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/1950992896.webp" alt="Stranger Things"><div class="show-title">Stranger Things</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/1301424355.webp" alt="Dark"><div class="show-title">Dark</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/3218008927.webp" alt="Squid Game"><div class="show-title">Squid Game</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/1272619231.webp" alt="Sacred Games"><div class="show-title">Sacred Games</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/3975075528.webp" alt="Mismatched"><div class="show-title">Mismatched</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/2632516337.webp" alt="The Witcher"><div class="show-title">The Witcher</div></div>
+    </div>
+  </section>
+  <section class="carousel container">
+    <div class="carousel-title">Trending Now</div>
+    <div class="carousel-row" id="carousel-trending">
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/3644830612.webp" alt="Black Mirror"><div class="show-title">Black Mirror</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/4055615607.woff2" alt="Wednesday" style="object-fit:contain; background:#221e20;"><div class="show-title">Wednesday</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/325475959.woff2" alt="Delhi Crime" style="object-fit:contain; background:#292021;"><div class="show-title">Delhi Crime</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/1730971747.woff2" alt="Queen's Gambit" style="object-fit:contain; background:#272722;"><div class="show-title">Queen's Gambit</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/844708784.webp" alt="The Crown"><div class="show-title">The Crown</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/3895876199.webp" alt="See You In My 19th Life"><div class="show-title">See You In My 19th Life</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/924556603.webp" alt="Ginny & Georgia"><div class="show-title">Ginny & Georgia</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/2632516337.webp" alt="You"><div class="show-title">You</div></div>
+      <div class="show-tile"><img src="https://ext.same-assets.com/1538094606/1950992896.webp" alt="Manifest"><div class="show-title">Manifest</div></div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section container">
+    <div class="faq-header">Frequently Asked Questions</div>
+    <ul class="faq-list">
+      <li class="faq-q">What is Netflix? <span class="faq-arrow">▼</span></li>
+      <li class="faq-a">Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.</li>
+      <li class="faq-q">How much does Netflix cost? <span class="faq-arrow">▼</span></li>
+      <li class="faq-a">Watch Netflix on your smartphone, tablet, smart TV, laptop, or streaming device for a fixed monthly fee. Plans range from ₹149 to ₹649 a month. No extra costs, no contracts.</li>
+      <li class="faq-q">Where can I watch? <span class="faq-arrow">▼</span></li>
+      <li class="faq-a">Watch anywhere, anytime. Sign in with your Netflix account to watch instantly on the web at netflix.com from your personal computer or on any internet-connected device that offers the Netflix app.</li>
+      <li class="faq-q">How do I cancel? <span class="faq-arrow">▼</span></li>
+      <li class="faq-a">Netflix is flexible. There are no annoying contracts and no commitments. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime.</li>
+      <li class="faq-q">Is Netflix good for kids? <span class="faq-arrow">▼</span></li>
+      <li class="faq-a">The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space.</li>
+    </ul>
+  </section>
+
+  <!-- AI-Powered Recommendation Feature - ENHANCED -->
+  <section class="ai-chat container">
+    <div class="ai-chat-header">
+      <span class="ai-circle">AI</span>
+      <div class="ai-chat-tit">AI-Powered Netflix Recommendations</div>
+    </div>
+    <div class="ai-chat-main">
+      <div class="ai-convo" id="ai-convo">
+        <div class="ai-bubble ai">Hi! I’m your Netflix AI assistant. Tell me what you like (e.g. “romantic comedies set in Paris”, “action with strong female leads”, “indian crime stories”…) and I’ll recommend something great!</div>
+      </div>
+    </div>
+    <form class="ai-chat-form" id="ai-chat-form" autocomplete="off">
+      <input id="ai-input" type="text" placeholder="Tell me what you want to watch..." maxlength="120" required />
+      <button type="submit">Ask AI →</button>
+    </form>
+    <div class="ai-chat-footer">This AI is for demonstration • No real user data is sent or stored</div>
+  </section>
+
+  <footer class="footer">
+    Questions? Call <a href="tel:000-800-919-1694">000-800-919-1694</a> • <a href="#">FAQ</a> • <a href="#">Help Centre</a> <br><br>
+    <span style="color:#bbb;">Netflix India&nbsp;&copy;&nbsp;2024</span><br>
+    <span style="font-size: .86em;">Clone UI by Same AI • Not affiliated with Netflix</span>
+  </footer>
+
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-q').forEach(function(q) {
+      q.addEventListener('click', function(){
+        document.querySelectorAll('.faq-q').forEach(el => el!==q && el.classList.remove('open'));
+        q.classList.toggle('open');
+      });
+    });
+    // AI Recommendations Engine – Demo Only
+    const SUGGESTIONS = [
+      {
+        test: q => /romantic/i.test(q),
+        response: 'You might like <b>To All The Boys I&#39;ve Loved Before</b>, <b>Emily in Paris</b>, or <b>The Kissing Booth</b>.',
+        covers: [
+          'https://ext.same-assets.com/1538094606/844708784.webp',
+          'https://ext.same-assets.com/1538094606/3218008927.webp',
+          'https://ext.same-assets.com/1538094606/2632516337.webp'
+        ]
+      },
+      {
+        test: q => /action|fight|explos(ion|ive)?|spy/i.test(q),
+        response: 'Try <b>Extraction</b>, <b>Red Notice</b>, or <b>Kaleidoscope</b>!',
+        covers: [
+          'https://ext.same-assets.com/1538094606/924556603.webp',
+          'https://ext.same-assets.com/1538094606/3644830612.webp',
+          'https://ext.same-assets.com/1538094606/1301424355.webp'
+        ]
+      },
+      {
+        test: q => /horror|scary|monster|ghost/i.test(q),
+        response: 'Boo! You may enjoy <b>The Haunting of Hill House</b> or <b>All of Us Are Dead</b>.',
+        covers: [
+          'https://ext.same-assets.com/1538094606/3895876199.webp',
+          'https://ext.same-assets.com/1538094606/2632516337.webp'
+        ]
+      },
+      {
+        test: q => /kids|children|family/i.test(q),
+        response: 'Great for kids: <b>Boss Baby</b>, <b>Cocomelon</b>, and <b>Motu Patlu</b>.',
+        covers: [
+          'https://ext.same-assets.com/1538094606/3975075528.webp',
+          'https://ext.same-assets.com/1538094606/844708784.webp',
+          'https://ext.same-assets.com/1538094606/3218008927.webp'
+        ]
+      },
+      {
+        test: q => /crime|detective|murder|thriller/i.test(q),
+        response: 'Crime fans like <b>Sacred Games</b>, <b>Delhi Crime</b>, or <b>Narcos</b>.',
+        covers: [
+          'https://ext.same-assets.com/1538094606/1272619231.webp',
+          'https://ext.same-assets.com/1538094606/325475959.woff2',
+          'https://ext.same-assets.com/1538094606/1301424355.webp'
+        ]
+      },
+      {
+        test: q => /indian|hindi|bollywood|desi/i.test(q),
+        response: 'For Indian content: <b>Yeh Kaali Kaali Ankhein</b>, <b>Jamtara</b>, or <b>Lust Stories</b>.',
+        covers: [
+          'https://ext.same-assets.com/1538094606/844708784.webp',
+          'https://ext.same-assets.com/1538094606/3975075528.webp',
+          'https://ext.same-assets.com/1538094606/1272619231.webp'
+        ]
+      },
+      {
+        test: q => /comedy|funny|laugh|sitcom/i.test(q),
+        response: "Try <b>Sex Education</b>, <b>Brooklyn Nine-Nine</b>, or <b>The Good Place</b>!",
+        covers: [
+          'https://ext.same-assets.com/1538094606/4055615607.woff2',
+          'https://ext.same-assets.com/1538094606/1730971747.woff2',
+          'https://ext.same-assets.com/1538094606/325475959.woff2'
+        ]
+      },
+      {
+        test: q => /anime|animation/i.test(q),
+        response: "If you love anime: <b>Demon Slayer</b>, <b>One Piece</b>, or <b>Castlevania</b> could be for you!",
+        covers: [
+          'https://ext.same-assets.com/1538094606/844708784.webp',
+          'https://ext.same-assets.com/1538094606/3218008927.webp',
+          'https://ext.same-assets.com/1538094606/3895876199.webp'
+        ]
+      },
+      {
+        test: q => true,
+        response: "Sorry, I couldn't find a perfect match, but check out <b>Stranger Things</b>, <b>Breaking Bad</b>, or <b>Peaky Blinders</b> – they&#39;re crowd favorites!",
+        covers: [
+          'https://ext.same-assets.com/1538094606/1950992896.webp',
+          'https://ext.same-assets.com/1538094606/3644830612.webp',
+          'https://ext.same-assets.com/1538094606/924556603.webp'
+        ]
+      }
+    ];
+    document.getElementById('ai-chat-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const input = document.getElementById('ai-input');
+      let q = input.value.trim();
+      if (!q) return;
+      appendMsg(q, 'user');
+      input.value='';
+      input.disabled=true;
+      setTimeout(function(){ // Simulate AI reply
+        const match = SUGGESTIONS.find(sug=>sug.test(q)) || SUGGESTIONS[SUGGESTIONS.length-1];
+        appendMsg(match.response, 'ai');
+        if (match.covers) appendCovers(match.covers);
+        input.disabled=false;
+        input.focus();
+      }, 600+Math.random()*700);
+    });
+    function appendMsg(txt, who) {
+      const convo = document.getElementById('ai-convo');
+      const bubble = document.createElement('div');
+      bubble.className = 'ai-bubble ' + who;
+      bubble.innerHTML = txt;
+      convo.appendChild(bubble);
+      convo.parentNode.scrollTop = convo.parentNode.scrollHeight;
+    }
+    function appendCovers(arr) {
+      const convo = document.getElementById('ai-convo');
+      const row = document.createElement('div'); row.style.display='flex'; row.style.gap='13px'; row.style.marginTop='0.5em';
+      for (let url of arr.slice(0,4)) {
+        let img=document.createElement('img'); img.src=url; img.style.width='55px';img.style.borderRadius='8px';img.style.boxShadow='0 1px 10px #0007'; img.alt='Recommended';
+        row.appendChild(img);
+      }
+      convo.appendChild(row);
+      convo.parentNode.scrollTop = convo.parentNode.scrollHeight;
+    }
+  </script>
+</body>
+</html>
